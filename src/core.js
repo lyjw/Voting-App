@@ -21,6 +21,16 @@ export function next(state) {
   const entries = state.get('entries')
                           .concat(getWinners(state.get('vote')));
 
+  // Declare a winnner if only one entry remains
+  // 'vote' and 'entries' are removed for future-proofing
+  // State-transformation functions should morph the old state
+  // into the new one instead of building a new state from scractch
+  if (entries.size === 1) {
+    return state.remove('vote')
+                 .remove('entries')
+                 .set('winner', entries.first());
+  }
+
   // Merge an update into the old state
   // Here, the first two entries are set up as the vote pair
   // and the rest of the entries in the new version of entries
