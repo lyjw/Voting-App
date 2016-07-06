@@ -1,5 +1,9 @@
 import {List} from 'immutable';
 
+// If an undefined state is passed to a reducer,
+// ensures it initializes it to an empty Map
+export const INITIAL_STATE = Map();
+
 export function setEntries(state, entries) {
   return state.set('entries', List(entries));
 }
