@@ -11,10 +11,19 @@ export default function startServer(store) {
     () => io.emit('state', store.getState().toJS())
   );
 
-  // When a client connects, this event listener will emit the current state
-  // so that the client can sync their client-side state to the latest server
-  // state immediately
   io.on('connection', (socket) => {
+    // When a client connects, this event listener will emit the current state
+    // so that the client can sync their client-side state to the latest server
+    // state immediately
     socket.emit('state', store.getState().toJS());
+
+    // Dispatch actions directly into the Redux store, where the store calls
+    // the reducer and the reducer's logic is executed. The Store updates
+    // the state based on the reducer's return value and executes the
+    // listener function subscribed by the server.
+
+    // Here, the server emits a 'state' event, so all connected clients receive
+    // the new state
+    socket.on('action', store.dispatch.bind(store));
   });
 }
