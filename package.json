@@ -1,12 +1,12 @@
 {
-  "name": "consomme",
+  "name": "voting-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive",
     "test:watch": "npm run test -- --watch",
-    "build": "webpack --debug" 
+    "build": "webpack --debug"
   },
   "babel": {
     "presets": [
