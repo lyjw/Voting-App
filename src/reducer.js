@@ -9,7 +9,10 @@ export default function reducer(state = INITIAL_STATE, action) {
   case 'NEXT':
     return next(state);
   case 'VOTE':
-    return vote(state, action.entry)
+    // Modularization - only provide the part of the state tree (sub-tree)
+    // that is required for this action to the lower-level reducer function
+    return state.update('vote',
+                           voteState => vote(voteState, action.entry));
   }
 
   // If the action is not recognized, the current state is returned
